@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const productCtrl = require('../controllers/product');
+const { URLSearchParams } = require('url');
+const { title } = require('process');
 
 router.get('/', productCtrl.getAllProducts);
 router.get('/:id', productCtrl.getOneProduct);
@@ -62,3 +64,29 @@ const articleItem = () =>
 
     })
 
+    let params = new URLSearchParams(document.location.search)
+    let id = params.get("id");
+    const url = `http://localhost:3000/api/products/${id}`
+    fetch(url)
+
+        .then(function (res){
+
+            return res.json
+
+
+        })
+
+        .then((data=>{
+
+            console.log(data);
+            let img = docuement.createElement('img')
+
+            img.src = data.imageUrl
+            img.alert = data.altTxt
+
+            document.querySelector('.item__img').append(img)
+            title.innerHTML = data.name
+            description.innerHTML = data.description
+            privateDecrypt.innerHTML = data.price
+            
+        }))
