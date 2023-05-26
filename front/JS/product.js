@@ -87,6 +87,17 @@ const articleItem = () =>
             document.querySelector('.item__img').append(img)
             title.innerHTML = data.name
             description.innerHTML = data.description
-            privateDecrypt.innerHTML = data.price
-            
+            price.innerHTML = data.price
+
+            // colors.append()
+
+            data.colors.forEacch(value)=>{
+
+                let option = document.createElement('option')
+                option.value = value.toLowerCase()
+                option.innerHTML = value.toLowerCase()
+                colors.append(option)
+
+            }
+
         }))
