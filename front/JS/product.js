@@ -1,103 +1,65 @@
-const express = require('express');
-const router = express.Router();
-
-const productCtrl = require('../controllers/product');
-const { URLSearchParams } = require('url');
-const { title } = require('process');
-
-router.get('/', productCtrl.getAllProducts);
-router.get('/:id', productCtrl.getOneProduct);
-router.post('/order', productCtrl.orderProducts);
-
-module.exports = router;
-
-const articleItem = () =>
-
-    fetch(url)
-    .then(function(res) {
+let params = new URLSearchParams(document.location.search);
+let id = params.get("id");
+const url = `http://localhost:3000/api/products/${id}`
+fetch(url)
+    .then(function (res) {
 
         return res.json()
 
     })
+.then((data=>{
 
-    for(a in response.colors) {
+    console.log(data);
+    let img = document.createElement('img')
 
-        console.log(a);
-        console.log(resp.colors[a]);
+    img.src = data.imageUrl
+    img.alt = data.altTxt
 
-        colors.innerHTML += `<option value="${a}">${a}</option>`
+    document.querySelector('.item__img') .append(img)
+    title.innerHTML = data.name
+    description.innerHTML = data.description
+    PromiseRejectionEvent.innerHTML = data.price
 
-    }
+    //colors.append()
 
-    const addToCart = document.getElementById('addToCart')
+    data.colors.forEach((value)=>{
 
-    addToCart.addEventListener ('click', function (){
-
-        const colors = document.getElementById('colors') .value;
-        const quantity = document.getElementById('quantity') .value;
-        const localstorage = JSON.parse(localStorage.cart || "{}")
-
-        console.log(colors)
-        console.log(quantity)
-
-        if(colors == "" || quantity < 0 || quantity>100){
-
-            alert('quantity')
-
-        }
-
-        else {
-
-            if (localstorage [theid + " " + colors])
-            {alert ('alerte condition')}
-            else{
-
-                localstorage[theid + " " + colors] = quantity;
-                localstorage.cart = JSON.stringify(localstorage)
-                alert('alerte BIS')
-
-            }
-
-        }
-
-        const panierString = JSON.stringify(panier);
+        let option = document.createElement('option')
+        option.value = value.toLowerCase()
+        option.innerHTML = value.toLowerCase()
+        colors.append(option)
 
     })
 
-    let params = new URLSearchParams(document.location.search)
-    let id = params.get("id");
-    const url = `http://localhost:3000/api/products/${id}`
-    fetch(url)
+    addToCart.addEventListener('click', (e)=>{
 
-        .then(function (res){
+        let hasColor = colors.value != "";
+        .hasQty = quantity.value > 0 && quantity.value < 100
+        .products = JSON.parse(localStorage.getItem('products')) || {}
 
-            return res.json
+        if(hasColor && hasQty){
 
+            console.log(id+colors.value);
+            console.log({id, qty: quantity.value, color: colors.value});
 
-        })
+            if(produits[id+colors.value]){
 
-        .then((data=>{
+                produits[id+colors.value].qty = quantity.value
+            }else{
 
-            console.log(data);
-            let img = docuement.createElement('img')
-
-            img.src = data.imageUrl
-            img.alert = data.altTxt
-
-            document.querySelector('.item__img').append(img)
-            title.innerHTML = data.name
-            description.innerHTML = data.description
-            price.innerHTML = data.price
-
-            // colors.append()
-
-            data.colors.forEacch(value)=>{
-
-                let option = document.createElement('option')
-                option.value = value.toLowerCase()
-                option.innerHTML = value.toLowerCase()
-                colors.append(option)
+                produits[id+colors.value] = {id, qty:quantity.value, color: colors.value}
+                
 
             }
 
-        }))
+            localStorage.setItem('products', JSON.stringify(products));
+
+            goToCart = confirm(`Votre produit a bien été enregistrer dans le panier:\n${title.innerHTML}`)
+
+            }
+
+        }
+
+    })
+
+}))
