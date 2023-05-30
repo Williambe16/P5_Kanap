@@ -54,9 +54,11 @@ fetch(url)
 
             localStorage.setItem('products', JSON.stringify(products));
 
-            goToCart = confirm(`Votre produit a bien été enregistrer dans le panier:\n${title.innerHTML}`)
+            goToCart = confirm(`Votre produit a bien été enregistrer dans le panier:\n${title.innerHTML} - pour une quantité de ${quantity.value}`);
 
-            }
+            if(goToCart)location.href = "cart.html"
+
+            }else alert("Veuillez entrer une ccouleur et une quantité pour l'ajouter au panier")
 
         }
 
