@@ -1,67 +1,57 @@
 let params = new URLSearchParams(document.location.search);
 let id = params.get("id");
-const url = `http://localhost:3000/api/products/${id}`
+const url = `http://localhost:3000/api/products/${id}`;
 fetch(url)
-    .then(function (res) {
-
-        return res.json()
-
-    })
-.then((data=>{
-
+  .then(function(res) {
+    return res.json();
+  })
+  .then((data) => {
     console.log(data);
-    let img = document.createElement('img')
+    let img = document.createElement('img');
+    img.src = data.imageUrl;
+    img.alt = data.altTxt;
+    document.querySelector('.item__img').append(img);
+    let title = document.querySelector('.item__title');
+    let description = document.querySelector('.item__description');
+    let price = document.querySelector('.item__price');
 
-    img.src = data.imageUrl
-    img.alt = data.altTxt
+    title.innerHTML = data.name;
+    description.innerHTML = data.description;
+    price.innerHTML = data.price;
 
-    document.querySelector('.item__img') .append(img)
-    title.innerHTML = data.name
-    description.innerHTML = data.description
-    PromiseRejectionEvent.innerHTML = data.price
+    let colors = document.querySelector('.item__colors');
+    let addToCart = document.querySelector('.add-to-cart');
+    let quantity = document.querySelector('.item__quantity');
+    let products = JSON.parse(localStorage.getItem('products')) || {};
 
-    //colors.append()
+    data.colors.forEach((value) => {
+      let option = document.createElement('option');
+      option.value = value.toLowerCase();
+      option.innerHTML = value.toLowerCase();
+      colors.append(option);
+    });
 
-    data.colors.forEach((value)=>{
+    addToCart.addEventListener('click', (e) => {
+      let hasColor = colors.value !== "";
+      let hasQty = quantity.value > 0 && quantity.value < 100;
 
-        let option = document.createElement('option')
-        option.value = value.toLowerCase()
-        option.innerHTML = value.toLowerCase()
-        colors.append(option)
+      if (hasColor && hasQty) {
+        console.log(id + colors.value);
+        console.log({ id, qty: quantity.value, color: colors.value });
 
-    })
-
-    addToCart.addEventListener('click', (e)=>{
-
-        let hasColor = colors.value != "";
-        .hasQty = quantity.value > 0 && quantity.value < 100
-        .products = JSON.parse(localStorage.getItem('products')) || {}
-
-        if(hasColor && hasQty){
-
-            console.log(id+colors.value);
-            console.log({id, qty: quantity.value, color: colors.value});
-
-            if(produits[id+colors.value]){
-
-                produits[id+colors.value].qty = quantity.value
-            }else{
-
-                produits[id+colors.value] = {id, qty:quantity.value, color: colors.value}
-                
-
-            }
-
-            localStorage.setItem('products', JSON.stringify(products));
-
-            goToCart = confirm(`Votre produit a bien été enregistrer dans le panier:\n${title.innerHTML} - pour une quantité de ${quantity.value}`);
-
-            if(goToCart)location.href = "cart.html"
-
-            }else alert("Veuillez entrer une ccouleur et une quantité pour l'ajouter au panier")
-
+        if (products[id + colors.value]) {
+          products[id + colors.value].qty = quantity.value;
+        } else {
+          products[id + colors.value] = { id, qty: quantity.value, color: colors.value };
         }
 
-    })
+        localStorage.setItem('products', JSON.stringify(products));
 
-}))
+        let goToCart = confirm(`Votre produit a bien été enregistré dans le panier:\n${title.innerHTML} - pour une quantité de ${quantity.value}`);
+
+        if (goToCart) location.href = "cart.html";
+      } else {
+        alert("Veuillez entrer une couleur et une quantité pour l'ajouter au panier");
+      }
+    });
+  });
