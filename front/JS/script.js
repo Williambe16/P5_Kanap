@@ -12,7 +12,7 @@ const getArticles = () => {
       console.log(elementsContainer);
       console.log(data);
       for (const product of data) {
-        console.log(product);
+        console.log(product._id);
         const article = document.createElement("article");
         const link = document.createElement("a");
         const img = document.createElement("img");
@@ -24,7 +24,7 @@ const getArticles = () => {
         h3.textContent = product.name;
         p.textContent = product.description;
 
-        link.href = `./product.html?id=${product.id}`;
+        link.href = `./product.html?id=${product._id}`;
         link.appendChild(article);
         article.appendChild(img);
         article.appendChild(h3);
