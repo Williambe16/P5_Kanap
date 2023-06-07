@@ -11,17 +11,17 @@ fetch(url)
     img.src = data.imageUrl;
     img.alt = data.altTxt;
     document.querySelector('.item__img').append(img);
-    let title = document.querySelector('.item__title');
-    let description = document.querySelector('.item__description');
-    let price = document.querySelector('.item__price');
+    let title = document.querySelector('#title');
+    let description = document.querySelector('#description');
+    let price = document.querySelector('#price');
 
     title.innerHTML = data.name;
     description.innerHTML = data.description;
     price.innerHTML = data.price;
 
-    let colors = document.querySelector('.item__colors');
-    let addToCart = document.querySelector('.add-to-cart');
-    let quantity = document.querySelector('.item__quantity');
+    let colors = document.querySelector('#colors');
+    let addToCart = document.querySelector('#addToCart');
+    let quantity = document.querySelector('#quantity');
     let products = JSON.parse(localStorage.getItem('products')) || {};
 
     data.colors.forEach((value) => {
