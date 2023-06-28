@@ -6,6 +6,16 @@
     <meta charset="utf-8">
     <meta name="description" content="Plateforme incroyable de e-commerce">
 
+    <script>
+
+const cartItemCount = document.getElementById("cartItemCount"); // Récupération de l'élément où afficher le nombre d'articles
+if (cartItemCount) {
+  cartItemCount.textContent = totalOrderedItems.toString(); // Afficher le nombre exact d'articles
+  localStorage.setItem("cartItemCount", totalOrderedItems.toString()); // Stocker le nombre d'articles dans localStorage
+}
+
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
